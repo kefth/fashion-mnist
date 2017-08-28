@@ -39,7 +39,9 @@ class FashionSimpleNet(nn.Module):
 
 
 
-""" Resnet """
+###############################################################################
+#                                ResNet                                       #
+###############################################################################
 
 __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
            'resnet152']
@@ -237,6 +239,7 @@ def resnet152(pretrained=False, **kwargs):
     if pretrained:
         model.load_state_dict(model_zoo.load_url(model_urls['resnet152']))
     return model
+
 
 
 

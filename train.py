@@ -4,6 +4,7 @@ from torch.autograd import Variable
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from fashionmnist import FashionMNIST
+from torchvision import datasets
 import model
 import utils
 import time
@@ -18,6 +19,7 @@ parser.add_argument("--nepochs", type=int, default=200, help="max epochs")
 parser.add_argument("--nocuda", action='store_true', help="no cuda used")
 parser.add_argument("--nworkers", type=int, default=4, help="number of workers")
 parser.add_argument("--seed", type=int, default=1, help="random seed")
+parser.add_argument("--data", type=str, default='fashion', help="mnist or fashion")
 args = parser.parse_args()
 
 cuda = not args.nocuda and torch.cuda.is_available() # use cuda
@@ -68,12 +70,20 @@ val_transforms = transforms.Compose([
 
 # Create dataloaders. Use pin memory if cuda.
 kwargs = {'pin_memory': True} if cuda else {}
-trainset = FashionMNIST('data', train=True, download=True, transform=train_transforms)
-train_loader = DataLoader(trainset, batch_size=args.batch_size,
-                        shuffle=True, num_workers=args.nworkers, **kwargs)
-valset = FashionMNIST('data', train=False, transform=val_transforms)
-val_loader = DataLoader(valset, batch_size=args.batch_size,
-                        shuffle=False, num_workers=args.nworkers, **kwargs)
+if(args.data == 'mnist'):
+    trainset = datasets.MNIST('data-mnist', train=True, download=True, transform=train_transforms)
+    train_loader = DataLoader(trainset, batch_size=args.batch_size,
+                            shuffle=True, num_workers=args.nworkers, **kwargs)
+    valset = datasets.MNIST('data-mnist', train=False, transform=val_transforms)
+    val_loader = DataLoader(valset, batch_size=args.batch_size,
+                            shuffle=False, num_workers=args.nworkers, **kwargs)
+else:
+    trainset = FashionMNIST('data', train=True, download=True, transform=train_transforms)
+    train_loader = DataLoader(trainset, batch_size=args.batch_size,
+                            shuffle=True, num_workers=args.nworkers, **kwargs)
+    valset = FashionMNIST('data', train=False, transform=val_transforms)
+    val_loader = DataLoader(valset, batch_size=args.batch_size,
+                            shuffle=False, num_workers=args.nworkers, **kwargs)
 
 def train(net, loader, criterion, optimizer):
     net.train()

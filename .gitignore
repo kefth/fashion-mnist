@@ -99,3 +99,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+data/
+saved-models/
+runs/

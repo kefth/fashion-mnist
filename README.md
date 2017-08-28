@@ -26,5 +26,6 @@ Best accuracy of the same model when run on MNIST and Fashion MNIST.
 
 |Model|MNIST|Fashion MNIST|
 |---|---|---|
-|ResNet18| ? | 0.948|
+|ResNet18| 0.979 | 0.949|
+|SimpleNet|0.971|0.919|
 

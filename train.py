@@ -113,6 +113,7 @@ def validate(net, loader, criterion):
 
 if __name__ == '__main__':
     net = model.__dict__[args.model]()
+    print(net)
     criterion = torch.nn.CrossEntropyLoss(size_average=False)
 
     if cuda:

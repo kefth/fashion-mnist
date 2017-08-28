@@ -93,7 +93,7 @@ def train(net, loader, criterion, optimizer):
         running_loss += loss.data[0]
         pred = output.data.max(1, keepdim=True)[1] # get the index of the max log-probability
         running_accuracy += pred.eq(y.data.view_as(pred)).cpu().sum()
-    return running_loss/len(loader), running_accuracy/len(loader)
+    return running_loss/len(loader.dataset), running_accuracy/len(loader.dataset)
 
 def validate(net, loader, criterion):
     net.eval()
@@ -108,7 +108,7 @@ def validate(net, loader, criterion):
         running_loss += loss.data[0]
         pred = output.data.max(1, keepdim=True)[1] # get the index of the max log-probability
         running_accuracy += pred.eq(y.data.view_as(pred)).cpu().sum()
-    return running_loss/len(loader), running_accuracy/len(loader)
+    return running_loss/len(loader.dataset), running_accuracy/len(loader.dataset)
 
 
 if __name__ == '__main__':

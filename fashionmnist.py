@@ -177,3 +177,15 @@ def read_image_file(path):
                     idx += 1
         assert len(images) == length
         return torch.ByteTensor(images).view(-1, 28, 28)
+
+if __name__ == '__main__':
+    trainset = FashionMNIST('data', train=True, download=True)
+    train_loader = data.DataLoader(trainset, batch_size=64,
+                            shuffle=True, num_workers=4)
+    valset = FashionMNIST('data', train=False)
+    val_loader = data.DataLoader(valset, batch_size=64,
+                            shuffle=False, num_workers=4)
+    print(len(train_loader.dataset), len(val_loader.dataset))
+
+    for i,(x,y) in enumerate(train_loader):
+        print(i)

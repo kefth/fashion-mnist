@@ -136,7 +136,7 @@ if __name__ == '__main__':
     print(net, file=logfile)
 
     # Change optimizer for finetuning
-    optimizer = optim.Adam(net.parameters())
+    optimizer = optim.Adam(net.parameters(),lr=0.001)
 
     for e in range(args.nepochs):
         start = time.time()

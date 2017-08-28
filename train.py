@@ -143,6 +143,8 @@ if __name__ == '__main__':
         print(stats, file=logfile)
         log_value('train_loss', train_loss, e)
         log_value('val_loss', val_loss, e)
+        log_value('train_acc', train_acc, e)
+        log_value('val_acc', val_acc, e)
 
         #early stopping and save best model
         if val_loss < best_loss:

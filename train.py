@@ -62,7 +62,7 @@ train_transforms = transforms.Compose([
                         utils.RandomTranslation(),
                         utils.RandomVerticalFlip(),
                         transforms.ToTensor()
-                        #transforms.Normalize((0.1307,), (0.3081,))
+                        # transforms.Normalize((0.1307,), (0.3081,))
                         ]
                         )
 val_transforms = transforms.Compose([
@@ -138,7 +138,7 @@ if __name__ == '__main__':
     print(net, file=logfile)
 
     # Change optimizer for finetuning
-    optimizer = optim.Adam(net.parameters(),lr=0.001)
+    optimizer = optim.Adam(net.parameters())
 
     for e in range(args.nepochs):
         start = time.time()

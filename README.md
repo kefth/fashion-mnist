@@ -1,8 +1,30 @@
 # Zalando's MNIST fashion replacement
 
-Zalando recently released a MNIST replacement. The issues with trying MNIST are
-known but you can read about their motivation [here](https://github.com/zalandoresearch/fashion-mnist).
+Zalando recently released an MNIST replacement. The issues with using MNIST are
+known but you can read about the dataset and their motivation [here](https://github.com/zalandoresearch/fashion-mnist).
 
-## ResNet18
+### Training
+```
+python train.py
 
-I tried out a ResNet18 which I tweaked to play with 28x28 images. Here's the architecture:
+        --model         # specify model, (FashionSimpleNet, resnet18)
+        --patience      # early stopping
+        --batch_size    # batch size
+        --nepochs       # max epochs
+        --nocuda        # no cuda
+        --nworkers      # number of workers
+        --seed          # random seed
+        --data          # mnist, fasion
+```
+
+#### Preprocessing
+
+Normalization, random horizontal flip, random vertical flip, random translation, random rotation.
+
+### Results
+Best accuracy of the same model when run on MNIST and Fashion MNIST.
+
+|Model|MNIST|Fashion MNIST|
+|---|---|---|
+|ResNet18| ? | 0.948|
+

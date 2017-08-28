@@ -187,5 +187,5 @@ if __name__ == '__main__':
                             shuffle=False, num_workers=4)
     print(len(train_loader.dataset), len(val_loader.dataset))
 
-    for i,(x,y) in enumerate(train_loader):
-        print(i)
+    for i,(x,y) in enumerate(train_loader.dataset):
+        print(y)

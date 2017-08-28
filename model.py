@@ -16,23 +16,20 @@ class FashionSimpleNet(nn.Module):
 
             nn.Conv2d(32, 64, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2), # 7
+            nn.MaxPool2d(kernel_size=2, stride=2) # 7
         )
         self.classifier = nn.Sequential(
             nn.Dropout(),
-            nn.Linear(64 * 7 * 7, 256),
+            nn.Linear(64 * 7 * 7, 128),
             nn.ReLU(inplace=True),
-            nn.Dropout(),
-            nn.Linear(256, 128),
-            nn.ReLU(inplace=True),
-            nn.Linear(128, 10),
+            nn.Linear(128, 10)
         )
 
     def forward(self, x):
         x = self.features(x)
         x = x.view(x.size(0), 64 * 7 * 7)
         x = self.classifier(x)
-        return F.log_softmax(x)
+        return x
 
 if __name__ == '__main__':
     net = FashionSimpleNet()

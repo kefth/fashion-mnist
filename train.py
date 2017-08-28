@@ -107,7 +107,7 @@ def validate(net, loader, criterion):
         loss = criterion(output, y)
         running_loss += loss.data[0]
         pred = output.data.max(1, keepdim=True)[1] # get the index of the max log-probability
-        running_accuracy += pred.eq(target.data.view_as(pred)).cpu().sum()
+        running_accuracy += pred.eq(y.data.view_as(pred)).cpu().sum()
     return running_loss/len(loader), running_accuracy/len(loader)
 
 

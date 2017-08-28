@@ -61,12 +61,14 @@ train_transforms = transforms.Compose([
                         utils.RandomRotation(),
                         utils.RandomTranslation(),
                         utils.RandomVerticalFlip(),
-                        transforms.ToTensor(),
-                        transforms.Normalize((0.1307,), (0.3081,))]
+                        transforms.ToTensor()
+                        #transforms.Normalize((0.1307,), (0.3081,))
+                        ]
                         )
 val_transforms = transforms.Compose([
-                        transforms.ToTensor(),
-                        transforms.Normalize((0.1307,), (0.3081,))])
+                        transforms.ToTensor()
+                        # transforms.Normalize((0.1307,), (0.3081,))
+                        ])
 
 # Create dataloaders. Use pin memory if cuda.
 kwargs = {'pin_memory': True} if cuda else {}

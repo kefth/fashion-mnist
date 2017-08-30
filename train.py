@@ -57,10 +57,10 @@ configure(current_dir, flush_secs=5)
 # Define transforms.
 # normalize = transforms.Normalize((0.1307,), (0.3081,)
 train_transforms = transforms.Compose([
-                        transforms.RandomHorizontalFlip(),
-                        utils.RandomRotation(),
-                        utils.RandomTranslation(),
-                        utils.RandomVerticalFlip(),
+                        # transforms.RandomHorizontalFlip(),
+                        # utils.RandomRotation(),
+                        # utils.RandomTranslation(),
+                        # utils.RandomVerticalFlip(),
                         transforms.ToTensor()
                         # transforms.Normalize((0.1307,), (0.3081,))
                         ]

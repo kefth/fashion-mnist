@@ -106,8 +106,7 @@ def run_model(net, loader, criterion, optimizer, train = True):
 if __name__ == '__main__':
 
     # Init network, criterion and early stopping
-    net = model.__dict__[args.model]()
-    print(net)
+    net = model.__dict__[args.model]().to(device)
     criterion = torch.nn.CrossEntropyLoss()
     patience = args.patience
     best_loss = 1e4

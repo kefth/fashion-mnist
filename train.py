@@ -101,23 +101,8 @@ def run_model(net, loader, criterion, optimizer, train = True):
         running_accuracy += torch.sum(pred == y.detach())
     return running_loss / len(loader), running_accuracy.double() / len(loader.dataset)
 
-
-
-if __name__ == '__main__':
-
-    # Init network, criterion and early stopping
-    net = model.__dict__[args.model]().to(device)
-    criterion = torch.nn.CrossEntropyLoss()
-    patience = args.patience
-    best_loss = 1e4
-
-    # Print model to logfile
-    # print(net, file=logfile)
-
-    # Define optimizer
-    optimizer = optim.Adam(net.parameters())
-
-    for e in range(args.nepochs):
+def train(epochs):
+    for e in range(epochs):
         start = time.time()
         train_loss, train_acc = run_model(net, train_loader,
                                       criterion, optimizer)
@@ -145,3 +130,19 @@ if __name__ == '__main__':
             if patience == 0:
                 print('Run out of patience!')
                 break
+
+
+
+if __name__ == '__main__':
+
+    # Init network, criterion and early stopping
+    net = model.__dict__[args.model]().to(device)
+    criterion = torch.nn.CrossEntropyLoss()
+    patience = args.patience
+    best_loss = 1e4
+
+
+    # Define optimizer
+    optimizer = optim.Adam(net.parameters())
+
+    train(args.epochs)

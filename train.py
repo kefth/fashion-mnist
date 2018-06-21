@@ -101,9 +101,6 @@ def run_model(net, loader, criterion, optimizer, train = True):
         running_accuracy += torch.sum(pred == y.detach())
     return running_loss / len(loader), running_accuracy.double() / len(loader.dataset)
 
-def train(epochs, train_patience):
-
-
 
 
 if __name__ == '__main__':

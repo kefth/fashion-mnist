@@ -145,4 +145,4 @@ if __name__ == '__main__':
     # Define optimizer
     optimizer = optim.Adam(net.parameters())
 
-    train(args.epochs)
+    train(args.nepochs)

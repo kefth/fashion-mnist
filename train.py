@@ -99,6 +99,7 @@ def run_model(net, loader, criterion, optimizer, train = True):
         # Calculate stats
         running_loss += loss.item()
         running_accuracy += torch.sum(pred == y.detach())
+        print(len(loader), len(loader.dataset))
     return running_loss / len(loader), running_accuracy / len(loader)
 
 

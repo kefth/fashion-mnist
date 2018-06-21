@@ -117,7 +117,7 @@ if __name__ == '__main__':
     # Train the network
     patience = args.patience
     best_loss = 1e4
-    for e in range(epochs):
+    for e in range(args.nepochs):
         start = time.time()
         train_loss, train_acc = run_model(net, train_loader,
                                       criterion, optimizer)

@@ -9,7 +9,7 @@ import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", type=str, default='FashionSimpleNet', help="model")
-parser.add_argument("--patience", type=int, default=5, help="early stopping patience")
+parser.add_argument("--patience", type=int, default=1, help="early stopping patience")
 parser.add_argument("--batch_size", type=int, default=256, help="batch size")
 parser.add_argument("--nepochs", type=int, default=200, help="max epochs")
 parser.add_argument("--nworkers", type=int, default=4, help="number of workers")
@@ -101,8 +101,8 @@ def run_model(net, loader, criterion, optimizer, train = True):
         running_accuracy += torch.sum(pred == y.detach())
     return running_loss / len(loader), running_accuracy.double() / len(loader.dataset)
 
-def train(epochs, patience):
-    patience = patience
+def train(epochs, train_patience):
+    patience = train_patience
     best_loss = 1e4
     for e in range(epochs):
         start = time.time()
@@ -122,7 +122,7 @@ def train(epochs, patience):
         # early stopping and save best model
         if val_loss < best_loss:
             best_loss = val_loss
-            patience = args.patience
+            patience = train_patience
             utils.save_model({
                 'arch': args.model,
                 'state_dict': net.state_dict()
@@ -146,4 +146,5 @@ if __name__ == '__main__':
     # Define optimizer
     optimizer = optim.Adam(net.parameters())
 
+    # Train the network
     train(args.nepochs, args.patience)

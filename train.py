@@ -101,7 +101,9 @@ def run_model(net, loader, criterion, optimizer, train = True):
         running_accuracy += torch.sum(pred == y.detach())
     return running_loss / len(loader), running_accuracy.double() / len(loader.dataset)
 
-def train(epochs):
+def train(epochs, patience):
+    patience = patience
+    best_loss = 1e4
     for e in range(epochs):
         start = time.time()
         train_loss, train_acc = run_model(net, train_loader,
@@ -138,11 +140,10 @@ if __name__ == '__main__':
     # Init network, criterion and early stopping
     net = model.__dict__[args.model]().to(device)
     criterion = torch.nn.CrossEntropyLoss()
-    patience = args.patience
-    best_loss = 1e4
+
 
 
     # Define optimizer
     optimizer = optim.Adam(net.parameters())
 
-    train(args.nepochs)
+    train(args.nepochs, args.patience)

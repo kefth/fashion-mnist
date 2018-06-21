@@ -102,7 +102,23 @@ def run_model(net, loader, criterion, optimizer, train = True):
     return running_loss / len(loader), running_accuracy.double() / len(loader.dataset)
 
 def train(epochs, train_patience):
-    patience = train_patience
+
+
+
+
+if __name__ == '__main__':
+
+    # Init network, criterion and early stopping
+    net = model.__dict__[args.model]().to(device)
+    criterion = torch.nn.CrossEntropyLoss()
+
+
+
+    # Define optimizer
+    optimizer = optim.Adam(net.parameters())
+
+    # Train the network
+    patience = args.patience
     best_loss = 1e4
     for e in range(epochs):
         start = time.time()
@@ -122,7 +138,7 @@ def train(epochs, train_patience):
         # early stopping and save best model
         if val_loss < best_loss:
             best_loss = val_loss
-            patience = train_patience
+            patience = args.patience
             utils.save_model({
                 'arch': args.model,
                 'state_dict': net.state_dict()
@@ -132,19 +148,3 @@ def train(epochs, train_patience):
             if patience == 0:
                 print('Run out of patience!')
                 break
-
-
-
-if __name__ == '__main__':
-
-    # Init network, criterion and early stopping
-    net = model.__dict__[args.model]().to(device)
-    criterion = torch.nn.CrossEntropyLoss()
-
-
-
-    # Define optimizer
-    optimizer = optim.Adam(net.parameters())
-
-    # Train the network
-    train(args.nepochs, args.patience)

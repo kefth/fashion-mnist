@@ -15,6 +15,7 @@ parser.add_argument("--batch_size", type=int, default=256, help="batch size")
 parser.add_argument("--nepochs", type=int, default=200, help="max epochs")
 parser.add_argument("--nworkers", type=int, default=4, help="number of workers")
 parser.add_argument("--seed", type=int, default=1, help="random seed")
+parser.add_argument("--data", type=str, default='MNIST', help="MNIST, or FashionMNIST")
 args = parser.parse_args()
 
 # Set up the device
@@ -59,14 +60,23 @@ val_transforms = transforms.Compose([
 ])
 
 # Create dataloaders. Use pin memory if cuda.
-kwargs = {'pin_memory': True} if device=='cuda:0' else {}
 
-trainset = datasets.FashionMNIST('./data', train=True, download=True, transform=train_transforms)
-train_loader = torch.utils.data.DataLoader(trainset, batch_size=args.batch_size,
-                          shuffle=True, num_workers=args.nworkers, **kwargs)
-valset = datasets.FashionMNIST('./data', train=False, transform=val_transforms)
-val_loader = torch.utils.data.DataLoader(valset, batch_size=args.batch_size,
-                        shuffle=True, num_workers=args.nworkers, **kwargs)
+if args.data == 'FashionMNIST':
+    trainset = datasets.FashionMNIST('./data', train=True, download=True, transform=train_transforms)
+    train_loader = torch.utils.data.DataLoader(trainset, batch_size=args.batch_size,
+                              shuffle=True, num_workers=args.nworkers)
+    valset = datasets.FashionMNIST('./data', train=False, transform=val_transforms)
+    val_loader = torch.utils.data.DataLoader(valset, batch_size=args.batch_size,
+                            shuffle=True, num_workers=args.nworkers)
+    print('Training on FashionMNIST')
+else:
+    trainset = datasets.MNIST('./data-mnist', train=True, download=True, transform=train_transforms)
+    train_loader = torch.utils.data.DataLoader(trainset, batch_size=args.batch_size,
+                              shuffle=True, num_workers=args.nworkers)
+    valset = datasets.MNIST('./data-mnist', train=False, transform=val_transforms)
+    val_loader = torch.utils.data.DataLoader(valset, batch_size=args.batch_size,
+                            shuffle=True, num_workers=args.nworkers)
+    print('Training on MNIST')
 
 
 def run_model(net, loader, criterion, optimizer, train = True):
@@ -125,19 +135,19 @@ if __name__ == '__main__':
         start = time.time()
         train_loss, train_acc = run_model(net, train_loader,
                                       criterion, optimizer)
-        val_loss, val_acc = run_model(net, train_loader,
+        val_loss, val_acc = run_model(net, val_loader,
                                       criterion, optimizer, False)
         end = time.time()
 
         # print stats
         stats = """Epoch: {}\t train loss: {:.3f}, train acc: {:.3f}\t
                 val loss: {:.3f}, val acc: {:.3f}\t
-                time: {:.1f}s""".format(e, train_loss, train_acc, val_loss,
+                time: {:.1f}s""".format(e+1, train_loss, train_acc, val_loss,
                                         val_acc, end - start)
         print(stats)
 
         # Write to csv file
-        writer.writerow([e, train_loss, train_acc.item(), val_loss, val_acc.item()])
+        writer.writerow([e+1, train_loss, train_acc.item(), val_loss, val_acc.item()])
         # early stopping and save best model
         if val_loss < best_loss:
             best_loss = val_loss

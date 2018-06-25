@@ -6,10 +6,11 @@ import utils
 import time
 import argparse
 import os
+import csv
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", type=str, default='FashionSimpleNet', help="model")
-parser.add_argument("--patience", type=int, default=1, help="early stopping patience")
+parser.add_argument("--patience", type=int, default=3, help="early stopping patience")
 parser.add_argument("--batch_size", type=int, default=256, help="batch size")
 parser.add_argument("--nepochs", type=int, default=200, help="max epochs")
 parser.add_argument("--nworkers", type=int, default=4, help="number of workers")
@@ -63,9 +64,9 @@ kwargs = {'pin_memory': True} if device=='cuda:0' else {}
 trainset = datasets.FashionMNIST('./data', train=True, download=True, transform=train_transforms)
 train_loader = torch.utils.data.DataLoader(trainset, batch_size=args.batch_size,
                           shuffle=True, num_workers=args.nworkers, **kwargs)
-valset = datasets.FashionMNIST('data', train=False, transform=val_transforms)
+valset = datasets.FashionMNIST('./data', train=False, transform=val_transforms)
 val_loader = torch.utils.data.DataLoader(valset, batch_size=args.batch_size,
-                        shuffle=False, num_workers=args.nworkers, **kwargs)
+                        shuffle=True, num_workers=args.nworkers, **kwargs)
 
 
 def run_model(net, loader, criterion, optimizer, train = True):
@@ -117,6 +118,9 @@ if __name__ == '__main__':
     # Train the network
     patience = args.patience
     best_loss = 1e4
+    writeFile = open('{}/stats.csv'.format(current_dir), 'a')
+    writer = csv.writer(writeFile)
+    writer.writerow(['Epoch', 'Train Loss', 'Train Accuracy', 'Validation Loss', 'Validation Accuracy'])
     for e in range(args.nepochs):
         start = time.time()
         train_loss, train_acc = run_model(net, train_loader,
@@ -132,6 +136,8 @@ if __name__ == '__main__':
                                         val_acc, end - start)
         print(stats)
 
+        # Write to csv file
+        writer.writerow([e, train_loss, train_acc.item(), val_loss, val_acc.item()])
         # early stopping and save best model
         if val_loss < best_loss:
             best_loss = val_loss
@@ -144,4 +150,5 @@ if __name__ == '__main__':
             patience -= 1
             if patience == 0:
                 print('Run out of patience!')
+                writeFile.close()
                 break

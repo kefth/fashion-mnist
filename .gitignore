@@ -104,3 +104,5 @@ data/
 saved-models/
 logs/
 data-mnist/
+.DS_Store
+._*

@@ -21,4 +21,4 @@ python train.py
 |   | FashionSimpleNet | ResNest18 |
 | ------------- | ------------- |-----------|
 | MNIST  | 0.994  | 0.994|
-| FashionMNIST  | 0.923  | 0.994 |
+| FashionMNIST  | 0.923  | 0.920|

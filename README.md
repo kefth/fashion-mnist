@@ -18,9 +18,4 @@ python train.py
 
 
 ### Results
-Best accuracy of the same model when run on MNIST and Fashion MNIST.
-
-|Model|MNIST|Fashion MNIST|
-|---|---|---|
-|ResNet18| 0.995 | 0.949|
-|SimpleNet|0.994|0.919|
+Best accuracy of the same model when run on Fashion MNIST: 0.919.

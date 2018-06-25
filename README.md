@@ -13,7 +13,6 @@ python train.py
         --nepochs       # max epochs
         --nworkers      # number of workers
         --seed          # random seed
-        --data          # mnist, fasion
 ```
 
 

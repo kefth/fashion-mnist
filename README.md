@@ -7,19 +7,15 @@ known but you can read about the dataset and their motivation [here](https://git
 ```
 python train.py
 
-        --model         # specify model, (FashionSimpleNet, resnet18)
+        --model         # specify model, (FashionSimpleNet)
         --patience      # early stopping
         --batch_size    # batch size
         --nepochs       # max epochs
-        --nocuda        # no cuda
         --nworkers      # number of workers
         --seed          # random seed
         --data          # mnist, fasion
 ```
 
-#### Preprocessing
-
-Normalization, random horizontal flip, random vertical flip, random translation, random rotation.
 
 ### Results
 Best accuracy of the same model when run on MNIST and Fashion MNIST.

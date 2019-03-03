@@ -106,3 +106,4 @@ logs/
 data-mnist/
 .DS_Store
 ._*
+runs/

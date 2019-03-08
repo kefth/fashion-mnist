@@ -7,7 +7,7 @@ import time
 import argparse
 import os
 import csv
-from tensorboardX import SummaryWriter
+# from tensorboardX import SummaryWriter
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", type=str, default='FashionSimpleNet', help="model")
@@ -20,7 +20,7 @@ parser.add_argument("--data", type=str, default='MNIST', help="MNIST, or Fashion
 args = parser.parse_args()
 
 #viz
-tsboard = SummaryWriter()
+# tsboard = SummaryWriter()
 
 # Set up the device
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -151,10 +151,10 @@ if __name__ == '__main__':
         print(stats)
 
         # viz
-        tsboard.add_scalar('data/train-loss',train_loss,e)
-        tsboard.add_scalar('data/val-loss',val_loss,e)
-        tsboard.add_scalar('data/val-accuracy',val_acc.item(),e)
-        tsboard.add_scalar('data/train-accuracy',train_acc.item(),e)
+        # tsboard.add_scalar('data/train-loss',train_loss,e)
+        # tsboard.add_scalar('data/val-loss',val_loss,e)
+        # tsboard.add_scalar('data/val-accuracy',val_acc.item(),e)
+        # tsboard.add_scalar('data/train-accuracy',train_acc.item(),e)
 
 
         # Write to csv file
@@ -172,5 +172,5 @@ if __name__ == '__main__':
             if patience == 0:
                 print('Run out of patience!')
                 writeFile.close()
-                tsboard.close()
+                # tsboard.close()
                 break

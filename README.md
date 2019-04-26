@@ -22,3 +22,5 @@ python train.py
 | ------------- | ------------- |-----------|
 | MNIST  | 0.994  | 0.994|
 | FashionMNIST  | 0.923  | 0.920|
+
+* I no longer maintain this repo
